@@ -30,3 +30,24 @@ fn test_block() {
     let res = block.run();
     assert!(res.is_err());
 }
+
+#[test]
+fn test_default_task() {
+    let block = Block::default_task("some task");
+    assert!(block.text() == "Task: some task");
+    assert!(block.duration() == Duration::from_secs(25 * 60));
+}
+
+#[test]
+fn test_default_short_break() {
+    let block = Block::default_short_break();
+    assert!(block.text() == "Short break");
+    assert!(block.duration() == Duration::from_secs(5 * 60));
+}
+
+#[test]
+fn test_default_long_break() {
+    let block = Block::default_long_break();
+    assert!(block.text() == "Long break");
+    assert!(block.duration() == Duration::from_secs(15 * 60));
+}

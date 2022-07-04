@@ -16,6 +16,18 @@ impl Block {
         }
     }
 
+    pub fn default_task(text: &str) -> Block {
+        Block::new(&format!("Task: {}", text), Duration::from_secs(25 * 60))
+    }
+
+    pub fn default_short_break() -> Block {
+        Block::new("Short break", Duration::from_secs(5 * 60))
+    }
+
+    pub fn default_long_break() -> Block {
+        Block::new("Long break", Duration::from_secs(15 * 60))
+    }
+
     pub fn run(&mut self) -> Result<(), String> {
         if self.done {
             return Err("Block already done".to_string());
