@@ -1,9 +1,10 @@
-use std::thread::sleep;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 pub struct Block {
     text: String,
     duration: Duration,
+    pub start: Option<Instant>,
+    pub elapsed: Duration,
     done: bool,
 }
 
@@ -12,6 +13,8 @@ impl Block {
         Block {
             text: text.to_string(),
             duration: duration,
+            start: None,
+            elapsed: Duration::from_nanos(0),
             done: false,
         }
     }
@@ -33,9 +36,13 @@ impl Block {
             return Err("Block already done".to_string());
         }
 
+        self.start = Some(Instant::now());
+
         // Run the time down
-        // TODO: This is almost certainly not the best way to do this.
-        sleep(self.duration);
+        let start_time = self.start.unwrap();
+        while self.elapsed < self.duration {
+            self.elapsed = Instant::now() - start_time;
+        }
 
         self.done = true;
         return Ok(());

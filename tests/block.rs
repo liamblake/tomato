@@ -14,11 +14,9 @@ fn test_block() {
     let res = block.run();
     let duration = start.elapsed();
 
-    println!("{}", duration.as_millis() as f64);
-    println!("{}", block.duration().as_millis() as f64);
-
     assert!(res.is_ok());
     assert!(block.done());
+    assert!(block.elapsed == block.duration());
     // TODO: Improve precision of timers
     assert!(abs_diff_eq!(
         duration.as_millis() as f64,
